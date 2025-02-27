@@ -20,7 +20,7 @@ const RightSideBar = ({
 
     return (
         <div className="p-6 w-1/4 border-r border-gray-200 bg-gray-50 h-screen overflow-auto shadow-lg">
-            <h2 className="text-lg font-semibold mb-6 text-gray-700">QR Code Styling Options</h2>
+            <h2 className="text-lg font-semibold mb-6 text-gray-700">QR Code Styling Option</h2>
 
             {/* Input fields */}
             <div className="mb-4">
