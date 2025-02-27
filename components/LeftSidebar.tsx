@@ -33,7 +33,7 @@ const LeftSidebar = ({
 
     return (
         <div className="p-4 w-1/4 border-r border-gray-300 bg-gray-50 h-screen overflow-auto">
-            <h2 className="text-lg font-bold mb-4">QR Code Styling Options</h2>
+            <h2 className="text-lg font-bold mb-4">QR Code Styling Option</h2>
             {/* Image Options */}
             <div className="mb-6">
                 <h3 className="text-md font-bold mb-2">Image Options</h3>
