@@ -1,58 +1,59 @@
 "use client";
-import React, { useState } from "react";
-import LeftSidebar from "@/components/LeftSidebar";
-import ClientQR from "@/components/ClientQR";
-import { Options } from "qr-code-styling";
-import Header from "@/components/Header";
-import RightSidebar from "@/components/RightSidebar";
 
-export default function Page() {
-    const [qrOptions, setQrOptions] = useState<Options>({
-        width: 300,
-        height: 300,
-        type: "svg",
-        data: "Enter your link or text here",
-        image: "https://avatar.iran.liara.run/public/12",
-        margin: 10,
-        qrOptions: {
-            typeNumber: 0,
-            mode: "Byte",
-            errorCorrectionLevel: "Q",
-        },
-        imageOptions: {
-            hideBackgroundDots: true,
-            imageSize: 0.4,
-            margin: 20,
-            crossOrigin: "anonymous",
-            saveAsBlob: true,
-        },
-        dotsOptions: {
-            color: "#222222",
-        },
-        backgroundOptions: {
-            color: "#b2ebe0",
-        },
-    });
+import { useState } from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
 
-    return (
-        <div>
-            <Header/>
-            <div className="flex">
-                {/* Sidebar for QR Code Options */}
-                <LeftSidebar
-                    onOptionsChange={(newOptions) => setQrOptions(newOptions)}
-                    currentOptions={qrOptions}
-                />
-                {/* QR Code Renderer */}
-                <div className="flex-grow">
-                    <ClientQR options={qrOptions}/>
-                </div>
-                <RightSidebar
-                    onOptionsChange={(newOptions) => setQrOptions(newOptions)}
-                    currentOptions={qrOptions}
-                />
-            </div>
+export default function Hero() {
+  const [url, setUrl] = useState("");
+
+  const handleGenerateQR = () => {
+    if (!url.trim()) return;
+    console.log("Generate QR for:", url);
+    // Add logic to send URL to backend
+  };
+
+  return (
+    <div className="flex items-center justify-center h-screen bg-[#e4e2dd] px-4">
+      <div className="text-center mt-[-2vh] md:mt-[-5vh] w-full max-w-lg">
+        {/* Centered Image (Responsive) */}
+        <div className="flex justify-center ">
+          <Image
+            src="/QR-Gen.png"
+            alt="QR Code"
+            width={400}
+            height={400}
+            className="md:w-96 md:h-96"
+          />
         </div>
 
-    );
+        {/* Animated Heading (Responsive) */}
+        <motion.h1
+          className="text-3xl md:text-4xl font-bold mb-6"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          How fast can you create a QR code?
+        </motion.h1>
+
+        {/* Input Field & Button (Responsive) */}
+        <div className="flex flex-col md:flex-row gap-2 max-w-md mx-auto">
+          <input
+            type="text"
+            placeholder="Type your URL"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none"
+          />
+          <button
+            onClick={handleGenerateQR}
+            className="px-5 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition"
+          >
+            Create My QR
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
