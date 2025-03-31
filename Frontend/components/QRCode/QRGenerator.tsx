@@ -21,7 +21,7 @@ export default function QRGenerator() {
     <div className="w-full h-full flex">
       {/* Left Sidebar - Styling Options */}
       <div className="w-1/4 h-full overflow-hidden bg-[#e4e2dd] border-r">
-        <div className="h-full overflow-y-auto p-4">
+        <div className="h-full overflow-y-auto px-4">
           <StylingOptions setOptions={setOptions} />
         </div>
       </div>
