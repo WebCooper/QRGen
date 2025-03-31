@@ -2,3 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+.react-colorful {
+    width: 100% !important;
+    height: 200px !important;
+  }
+  
+  .react-colorful__saturation {
+    border-radius: 0.5rem 0.5rem 0 0;
+  }
+  
+  .react-colorful__hue {
+    margin-top: 0.5rem;
+    border-radius: 0.5rem;
+  }
+  
+  .react-colorful__alpha {
+    margin-top: 0.5rem;
+    border-radius: 0.5rem;
+  }

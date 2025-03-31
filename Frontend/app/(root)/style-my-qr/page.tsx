@@ -4,7 +4,7 @@ import QRGenerator from "@/components/QRCode/QRGenerator"
 
 const page = () => {
   return (
-    <div className="h-screen flex">
+    <div className="min-h-screen h-screen overflow-hidden">
       <QRGenerator />
     </div>
   )

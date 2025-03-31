@@ -55,7 +55,7 @@ const QRCanvas: React.FC<QRCanvasProps> = ({ options }) => {
   }, [qrCode, options, mounted]);
 
   return (
-    <div className="w-[450px] h-[450px] bg-gray-200 rounded-2xl flex items-center justify-center">
+    <div className="w-[450px] h-[450px] bg-white rounded-2xl flex items-center justify-center">
       <div ref={ref} />
     </div>
   );

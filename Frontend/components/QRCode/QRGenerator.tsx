@@ -20,18 +20,25 @@ export default function QRGenerator() {
   return (
     <div className="w-full h-full flex">
       {/* Left Sidebar - Styling Options */}
-      <div className="w-1/4 p-4 bg-gray-100 border-r">
-        <StylingOptions setOptions={setOptions} />
+      <div className="w-1/4 h-full overflow-hidden bg-[#e4e2dd] border-r">
+        <div className="h-full overflow-y-auto p-4">
+          <StylingOptions setOptions={setOptions} />
+        </div>
       </div>
 
       {/* Center Area - QR Canvas */}
-      <div className="w-1/2 flex items-center justify-center bg-white">
+      <div 
+        className="w-1/2 h-full flex items-center justify-center bg-cover bg-center bg-no-repeat" 
+        style={{ backgroundImage: 'url("/bg-image2.jpg")' }}
+      >
         <QRCanvas options={options} />
       </div>
 
       {/* Right Sidebar - Export Options */}
-      <div className="w-1/4 p-4 bg-gray-100 border-l">
-        <ExportOptions />
+      <div className="w-1/4 h-full overflow-hidden bg-[#e4e2dd] border-l">
+        <div className="h-full overflow-y-auto p-4">
+          <ExportOptions />
+        </div>
       </div>
     </div>
   );

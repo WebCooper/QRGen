@@ -34,7 +34,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          How fast can you create a QR code? by jenkins 2
+          How fast can you create a QR code?
         </motion.h1>
 
         {/* Input Field & Button (Responsive) */}
