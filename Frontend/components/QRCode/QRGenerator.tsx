@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from "react";
 import QRCanvas from "./QRCanvas";
 import StylingOptions from "./StylingOptions";
