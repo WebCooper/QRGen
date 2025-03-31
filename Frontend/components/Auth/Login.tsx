@@ -1,9 +1,12 @@
 "use client"
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { loginUser } from '@/utils/authService'
+import { useUser } from '@/context/UserContext'
 
 const Login = () => {
   const router = useRouter()
+  const { login } = useUser()
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -13,25 +16,11 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const response = await fetch('http://localhost:4000/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
-
-      if (response.ok) {
-        const data = await response.json()
-        // Store the token in localStorage or your preferred storage method
-        localStorage.setItem('token', data.token)
-        router.push('/dashboard')
-      } else {
-        const data = await response.json()
-        setError(data.message || 'Login failed')
-      }
-    } catch (err) {
-      setError('Something went wrong')
+      const userData = await loginUser(formData)
+      login(userData) // This should update the context
+      router.push('/style-my-qr')
+    } catch (err: any) {
+      setError(err.message || 'Something went wrong')
     }
   }
 

@@ -1,7 +1,12 @@
+"use client"
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { useUser } from '@/context/UserContext'
 
 const Header = () => {
+  const { isAuthenticated, user, logout } = useUser()
+
   return (
     <header className="bg-[#e4e2dd] shadow-sm">
       <div className="mx-auto px-4 py-4 sm:px-6 lg:px-8">
@@ -16,18 +21,37 @@ const Header = () => {
             />
           </div>
           <div className="flex gap-4">
-            <Link 
-              href="/login" 
-              className="px-4 py-2 text-gray-600 hover:text-gray-900"
-            >
-              Login
-            </Link>
-            <Link 
-              href="/signup" 
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-            >
-              Sign Up
-            </Link>
+            {isAuthenticated ? (
+              <>
+                <Link 
+                  href="/dashboard" 
+                  className="px-4 py-2 text-gray-600 hover:text-gray-900"
+                >
+                  Dashboard
+                </Link>
+                <button 
+                  onClick={logout}
+                  className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link 
+                  href="/login" 
+                  className="px-4 py-2 text-gray-600 hover:text-gray-900"
+                >
+                  Login
+                </Link>
+                <Link 
+                  href="/signup" 
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

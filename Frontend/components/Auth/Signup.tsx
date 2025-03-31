@@ -1,6 +1,7 @@
 "use client"
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { registerUser } from '@/utils/authService'
 
 const Signup = () => {
   const router = useRouter()
@@ -13,31 +14,11 @@ const Signup = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match')
-      return
-    }
-
     try {
-      const response = await fetch('http://localhost:4000/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password
-        }),
-      })
-
-      if (response.ok) {
-        router.push('/login')
-      } else {
-        const data = await response.json()
-        setError(data.message || 'Registration failed')
-      }
-    } catch (err) {
-      setError('Something went wrong')
+      await registerUser(formData)
+      router.push('/login')
+    } catch (err: any) {
+      setError(err.message || 'Something went wrong')
     }
   }
 

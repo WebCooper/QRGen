@@ -1,64 +1,43 @@
-"use client";
+'use client'
 
-import { useEffect, useRef, useState } from "react";
-import type QRCodeStylingType from "qr-code-styling";
-import { Options } from "qr-code-styling";
+import { useEffect, useRef } from 'react';
+import QRCodeStyling from 'qr-code-styling';
+import { Options } from 'qr-code-styling';
 
 interface QRCanvasProps {
   options: Options;
+  onQRCodeInit: (qrCode: QRCodeStyling) => void;
 }
 
-const QRCanvas: React.FC<QRCanvasProps> = ({ options }) => {
-  const [qrCode, setQrCode] = useState<QRCodeStylingType | null>(null);
+const QRCanvas: React.FC<QRCanvasProps> = ({ options, onQRCodeInit }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const [mounted, setMounted] = useState(false);
+  const qrCodeRef = useRef<QRCodeStyling | null>(null);
 
-  // Mount effect
+  // Initialize QR code once
   useEffect(() => {
-    setMounted(true);
-    return () => setMounted(false);
-  }, []);
-
-  // Initialize QR code
-  useEffect(() => {
-    if (!mounted) return;
-
-    const loadQRCode = async () => {
-      const QRCodeStylingModule = (await import("qr-code-styling")).default;
-      const qr = new QRCodeStylingModule(options);
-      setQrCode(qr);
-
-      // Store ref.current in a variable to avoid cleanup issues
-      const currentRef = ref.current;
-      if (currentRef) {
-        qr.append(currentRef);
-      }
-
-      return () => {
-        if (currentRef) {
-          currentRef.innerHTML = "";
-        }
-      };
-    };
-
-    const cleanup = loadQRCode();
-    return () => {
-      cleanup.then(cleanupFn => cleanupFn());
-    };
-  }, [mounted, options]);
-
-  // Update QR code when options change
-  useEffect(() => {
-    if (qrCode && mounted) {
-      qrCode.update(options);
+    if (!qrCodeRef.current) {
+      const newQRCode = new QRCodeStyling(options);
+      qrCodeRef.current = newQRCode;
+      onQRCodeInit(newQRCode);
     }
-  }, [qrCode, options, mounted]);
+  }, []); // Remove onQRCodeInit from dependencies
 
-  return (
-    <div className="w-[450px] h-[450px] bg-white rounded-2xl flex items-center justify-center">
-      <div ref={ref} />
-    </div>
-  );
+  // Handle DOM updates
+  useEffect(() => {
+    if (ref.current && qrCodeRef.current) {
+      ref.current.innerHTML = '';
+      qrCodeRef.current.append(ref.current);
+    }
+  }, []); // Remove qrCodeRef.current from dependencies
+
+  // Update QR code options
+  useEffect(() => {
+    if (qrCodeRef.current) {
+      qrCodeRef.current.update(options);
+    }
+  }, [options]);
+
+  return <div ref={ref} className="bg-white p-4 rounded-lg shadow-lg" />;
 };
 
 export default QRCanvas;
