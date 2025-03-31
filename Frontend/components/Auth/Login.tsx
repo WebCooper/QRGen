@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { loginUser } from '@/utils/authService'
 import { useUser } from '@/context/UserContext'
+import { AuthError } from '@/types/auth'
 
 const Login = () => {
   const router = useRouter()
@@ -19,8 +20,9 @@ const Login = () => {
       const userData = await loginUser(formData)
       login(userData) // This should update the context
       router.push('/style-my-qr')
-    } catch (err: any) {
-      setError(err.message || 'Something went wrong')
+    } catch (err: unknown) {
+      const error = err as AuthError
+      setError(error.message || 'Something went wrong')
     }
   }
 

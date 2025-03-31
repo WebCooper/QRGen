@@ -4,7 +4,7 @@ import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import { UserProvider } from '@/context/UserContext'
 
-export default function RootLayout({
+export default function StyleMyQRLayout({
   children,
 }: {
   children: React.ReactNode

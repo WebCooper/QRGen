@@ -7,11 +7,15 @@ import QRCanvas from "./QRCanvas";
 import StylingOptions from "./StylingOptions";
 import ExportOptions from "./ExportOptions";
 
-export default function QRGenerator() {
+interface QRGeneratorProps {
+  initialData: string;
+}
+
+export default function QRGenerator({ initialData }: QRGeneratorProps) {
   const [options, setOptions] = useState<Options>({
     width: 400,
     height: 400,
-    data: "https://example.com",
+    data: initialData || "https://example.com", // Use the passed data
     margin: 10,
     dotsOptions: { color: "#000000", type: "rounded" },
     backgroundOptions: { color: "#FFFFFF" },
@@ -28,7 +32,10 @@ export default function QRGenerator() {
     <div className="w-full h-full flex">
       <div className="w-1/4 h-full overflow-hidden bg-[#e4e2dd] border-r">
         <div className="h-full overflow-y-auto px-4">
-          <StylingOptions setOptions={setOptions} />
+          <StylingOptions 
+            setOptions={setOptions} 
+            initialData={initialData}
+          />
         </div>
       </div>
 

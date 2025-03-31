@@ -3,14 +3,18 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Hero() {
   const [url, setUrl] = useState("");
+  const router = useRouter();
 
   const handleGenerateQR = () => {
     if (!url.trim()) return;
-    console.log("Generate QR for:", url);
-    // Add logic to send URL to backend
+    
+    // Encode the URL for safe query parameter passing
+    const encodedUrl = encodeURIComponent(url.trim());
+    router.push(`/style-my-qr?data=${encodedUrl}`);
   };
 
   return (

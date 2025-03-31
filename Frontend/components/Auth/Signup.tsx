@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { registerUser } from '@/utils/authService'
+import { AuthError } from '@/types/auth'
 
 const Signup = () => {
   const router = useRouter()
@@ -17,8 +18,9 @@ const Signup = () => {
     try {
       await registerUser(formData)
       router.push('/login')
-    } catch (err: any) {
-      setError(err.message || 'Something went wrong')
+    } catch (err: unknown) {
+      const error = err as AuthError
+      setError(error.message || 'Something went wrong')
     }
   }
 

@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 import '../globals.css'
 import { UserProvider } from '@/context/UserContext'
@@ -16,11 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="min-h-screen">
-          <UserProvider>
-            {children}
-          </UserProvider>
-        </div>
+        <UserProvider>
+          {children}
+        </UserProvider>
       </body>
     </html>
   )

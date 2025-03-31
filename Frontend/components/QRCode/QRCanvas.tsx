@@ -20,7 +20,7 @@ const QRCanvas: React.FC<QRCanvasProps> = ({ options, onQRCodeInit }) => {
       qrCodeRef.current = newQRCode;
       onQRCodeInit(newQRCode);
     }
-  }, []); // Remove onQRCodeInit from dependencies
+  }, [options, onQRCodeInit]);
 
   // Handle DOM updates
   useEffect(() => {
@@ -28,7 +28,7 @@ const QRCanvas: React.FC<QRCanvasProps> = ({ options, onQRCodeInit }) => {
       ref.current.innerHTML = '';
       qrCodeRef.current.append(ref.current);
     }
-  }, []); // Remove qrCodeRef.current from dependencies
+  }, []);
 
   // Update QR code options
   useEffect(() => {

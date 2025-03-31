@@ -5,13 +5,14 @@ import Link from 'next/link'
 import { useUser } from '@/context/UserContext'
 
 const Header = () => {
-  const { isAuthenticated, user, logout } = useUser()
+  const { isAuthenticated, logout } = useUser()
 
   return (
     <header className="bg-[#e4e2dd] shadow-sm">
       <div className="mx-auto px-4 py-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <Image 
               src="/QR-Gen-cropped.png" 
               alt="QR Generator Logo" 
@@ -19,6 +20,7 @@ const Header = () => {
               height={45}
               className="object-contain"
             />
+          </Link>
           </div>
           <div className="flex gap-4">
             {isAuthenticated ? (

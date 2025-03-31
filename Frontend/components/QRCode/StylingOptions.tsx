@@ -1,18 +1,26 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Options, DotType } from "qr-code-styling";
 import { HexAlphaColorPicker, HexColorInput } from "react-colorful";
 
 interface StylingOptionsProps {
   setOptions: (options: Options | ((prev: Options) => Options)) => void;
+  initialData?: string;
 }
 
-const StylingOptions: React.FC<StylingOptionsProps> = ({ setOptions }) => {
+const StylingOptions: React.FC<StylingOptionsProps> = ({ setOptions, initialData }) => {
   const [dotColor, setDotColor] = useState("#000000");
   const [bgColor, setBgColor] = useState("#FFFFFF");
   const [dotType, setDotType] = useState<DotType>("rounded");
-  const [data, setData] = useState("https://example.com");
+  const [data, setData] = useState(initialData || "https://example.com");
+
+  // Update data when initialData changes
+  useEffect(() => {
+    if (initialData) {
+      setData(initialData);
+    }
+  }, [initialData]);
 
   const handleDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newData = e.target.value;
