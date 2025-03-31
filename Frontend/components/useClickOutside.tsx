@@ -1,30 +1,22 @@
-import { useEffect, RefObject } from "react";
+import { useEffect } from 'react';
 
-function useClickOutside(ref: React.RefObject<HTMLElement | null>, handler: (event: MouseEvent | TouchEvent) => void) {
+type Handler = () => void;
+
+const useClickOutside = <T extends HTMLElement>(ref: React.RefObject<T | null>, handler: Handler): void => {
   useEffect(() => {
-    let startedInside = false;
-    let startedWhenMounted = false;
-
     const listener = (event: MouseEvent | TouchEvent) => {
-      if (startedInside || !startedWhenMounted) return;
-      if (!ref.current || ref.current.contains(event.target as Node)) return;
-
-      handler(event);
+      if (!ref.current || ref.current.contains(event.target as Node)) {
+        return;
+      }
+      handler();
     };
 
-    const validateEventStart = (event: MouseEvent | TouchEvent) => {
-      startedWhenMounted = !!ref.current;
-      startedInside = !!ref.current && ref.current.contains(event.target as Node);
-    };
-
-    document.addEventListener("mousedown", validateEventStart);
-    document.addEventListener("touchstart", validateEventStart);
-    document.addEventListener("click", listener);
+    document.addEventListener('mousedown', listener);
+    document.addEventListener('touchstart', listener);
 
     return () => {
-      document.removeEventListener("mousedown", validateEventStart);
-      document.removeEventListener("touchstart", validateEventStart);
-      document.removeEventListener("click", listener);
+      document.removeEventListener('mousedown', listener);
+      document.removeEventListener('touchstart', listener);
     };
   }, [ref, handler]);
 };

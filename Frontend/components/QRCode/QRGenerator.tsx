@@ -1,43 +1,57 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import QRCodeStyling from "qr-code-styling";
+import { Options } from "qr-code-styling";
 import QRCanvas from "./QRCanvas";
 import StylingOptions from "./StylingOptions";
 import ExportOptions from "./ExportOptions";
-import { Options } from "qr-code-styling";
 
-export default function QRGenerator() {
+interface QRGeneratorProps {
+  initialData: string;
+}
+
+export default function QRGenerator({ initialData }: QRGeneratorProps) {
   const [options, setOptions] = useState<Options>({
     width: 400,
     height: 400,
-    data: "https://example.com",
+    data: initialData || "https://example.com", // Use the passed data
     margin: 10,
     dotsOptions: { color: "#000000", type: "rounded" },
     backgroundOptions: { color: "#FFFFFF" },
     image: "",
+    type: "svg"
   });
+  const [qrCode, setQrCode] = useState<QRCodeStyling | null>(null);
+
+  const handleQRCodeInit = useCallback((initializedQRCode: QRCodeStyling) => {
+    setQrCode(initializedQRCode);
+  }, []); // Empty dependency array since it doesn't depend on any values
 
   return (
     <div className="w-full h-full flex">
-      {/* Left Sidebar - Styling Options */}
       <div className="w-1/4 h-full overflow-hidden bg-[#e4e2dd] border-r">
-        <div className="h-full overflow-y-auto p-4">
-          <StylingOptions setOptions={setOptions} />
+        <div className="h-full overflow-y-auto px-4">
+          <StylingOptions 
+            setOptions={setOptions} 
+            initialData={initialData}
+          />
         </div>
       </div>
 
-      {/* Center Area - QR Canvas */}
       <div 
         className="w-1/2 h-full flex items-center justify-center bg-cover bg-center bg-no-repeat" 
         style={{ backgroundImage: 'url("/bg-image2.jpg")' }}
       >
-        <QRCanvas options={options} />
+        <QRCanvas 
+          options={options} 
+          onQRCodeInit={handleQRCodeInit}
+        />
       </div>
 
-      {/* Right Sidebar - Export Options */}
       <div className="w-1/4 h-full overflow-hidden bg-[#e4e2dd] border-l">
-        <div className="h-full overflow-y-auto p-4">
-          <ExportOptions />
+        <div className="h-full overflow-y-auto px-4">
+          <ExportOptions qrCode={qrCode} />
         </div>
       </div>
     </div>
