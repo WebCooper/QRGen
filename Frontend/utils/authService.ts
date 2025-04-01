@@ -5,7 +5,10 @@ interface LoginData {
   password: string;
 }
 
-interface SignupData extends LoginData {
+interface SignupData {
+  name: string;
+  email: string;
+  password: string;
   confirmPassword: string;
 }
 
@@ -34,6 +37,7 @@ export const registerUser = async (userData: SignupData): Promise<AuthResponse> 
     }
 
     const { data } = await axiosInstance.post('/register', {
+      name: userData.name,
       email: userData.email,
       password: userData.password,
     });
