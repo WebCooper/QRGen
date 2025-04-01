@@ -1,5 +1,4 @@
 import axiosInstance from "./axiosInstance";
-import { User } from "@/types/user";
 
 interface LoginData {
   email: string;
