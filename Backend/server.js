@@ -6,15 +6,18 @@ import connectDB from "./config/database.js";
 dotenv.config();
 connectDB();
 
-import authRoutes from "./routes/authRoutes.js"; // Use `.js` extension
+import authRoutes from "./routes/authRoutes.js";
 
 const app = express();
 
-// Update CORS to allow specific origin
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5000';
+
+// Configure CORS with the frontend URL
 app.use(cors({
-  origin: '*',
+  origin: FRONTEND_URL,
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(express.json());
