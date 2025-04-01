@@ -1,6 +1,9 @@
 # Base image
 FROM node:18-alpine AS base
 
+# Install curl for healthcheck
+RUN apk add --no-cache curl
+
 # Set the working directory
 WORKDIR /home/node/app
 
@@ -19,5 +22,4 @@ COPY --chown=node:node . .
 
 EXPOSE 3000
 
-# Start the server with nodemon
-CMD ["npx", "nodemon", "server.js"]
+CMD ["node", "server.js"]
