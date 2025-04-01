@@ -12,7 +12,8 @@ const app = express();
 
 // Update CORS to allow specific origin
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5000',
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
 
